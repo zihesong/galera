@@ -19,9 +19,9 @@ import matplotlib.pyplot as plt
 wo_rate=0.2
 ro_rate=0.2
 wr_rate = 0.5 # write
-transaction_num = 1000
+transaction_num = 100
 operation_num = 20
-threads_num = 9
+threads_num = 10
 node_no=1
 server_id = ['155.98.38.154','155.98.38.159','155.98.38.153']
 
@@ -237,11 +237,11 @@ def run_ops(list_of_ops, client_no, start_pos):
             print(temp_tx_op)
             e_flag = True
         connect.commit()
-        # if e_flag == True:
-        #     state_op = 'op(' + str(i+start_pos) + ',0)'
-        #     e_count += 1
-        # else:
-        #     state_op = 'op(' + str(i+start_pos) + ',1)'
+        if e_flag == True:
+            state_op = 'op(' + str(i+start_pos) + ',0)'
+            e_count += 1
+        else:
+            state_op = 'op(' + str(i+start_pos) + ',1)'
         # temp_tx_op.append(state_op)
         result_ops.append(temp_tx_op)
     cursor.close()
@@ -290,7 +290,8 @@ def run_thread(id):
     # summary = []
     summary_line = "total = " + str(start_pos) + ", succeeded = " + str(start_pos-total_error) + ", failed = " + str(total_error)
     # summary.append(summary_line)
-    result_list.append(summary_line)
+    # result_list.append(summary_line)
+    result_list.insert(0, summary_line)
     result_path = "./output/transaction/result_" + str(client) + ".txt"
     write_result(result_list, result_path)
 

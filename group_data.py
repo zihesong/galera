@@ -13,12 +13,12 @@ def get_op(op):
     }
 
 
-file_list = [fn for fn in os.listdir('txn_result/') if fn.endswith('.txt')]
+file_list = [fn for fn in os.listdir('transaction/') if fn.endswith('.txt')]
 ops = []
 for file in file_list:
-    ops += linecache.getlines('txn_result/' + file)
+    ops += linecache.getlines('transaction/' + file)
 ops_per_trans = 5
-with open('txn_result/result.txt', 'w') as f:
+with open('transaction/result.txt', 'w') as f:
     now_id = 0
     cnt = ops_per_trans
     for op in ops:
