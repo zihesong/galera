@@ -1,8 +1,8 @@
 # raw_ops = [{'op_type': 'w', 'var': 1, 'val': 1, 'client_id': 1, 'tra_id': 1}]
-with open("transaction/result.txt") as in_file:
+with open("output/result.txt") as in_file:
     raw_ops = in_file.readlines()
 
-print(raw_ops)
+# print(raw_ops)
 
 def run_oopsla_graph(raw_ops):
     causal_hist = OopslaAtomicHistoryPO(raw_ops)

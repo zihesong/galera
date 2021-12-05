@@ -258,7 +258,7 @@ def write_result(result,file_path):
     for n_trans in range(len(result)-1):
         for n_ops in range(len(result[0])):
             f.write(result[n_trans][n_ops]+'\n')
-    f.write(result[len(result)-1])
+    f.write(str(result[len(result)-1]))
     f.close()
     print(file_path + ' is completed.')
 
