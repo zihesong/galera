@@ -21,7 +21,7 @@ wo_rate=0.2
 ro_rate=0.2
 wr_rate = 0.5 # write
 transaction_num = 100
-operation_num = 20
+operation_num = 25
 threads_num = 10
 node_no=1
 server_id = ['155.98.38.154','155.98.38.159','155.98.38.153']
@@ -51,7 +51,7 @@ except getopt.GetoptError:
     sys.exit()
 print("Parameters:\nwo_rate = " + str(wo_rate) + "\nro_rate = " + str(ro_rate) + "\nw_percent = " + str(wr_rate) + "\ntrans_num = " + str(transaction_num) + "\nop_num = " + str(operation_num) + "\nclient_num = " + str(threads_num) + "\nnode_no = " + str(node_no))
 
-key_num = 100
+key_num = 10
 e_threshold= 0.01*transaction_num
 total_op_num = transaction_num*operation_num
 
