@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# sh galera-data/galera-server.sh 1
+# sh galera/galera-server.sh 1
 # sudo nano /etc/mysql/conf.d/galera.cnf
 # scp -P 22 /Users/zoooesong/Workspaces/galera-server.sh nobi@pc479.emulab.net:/users/nobi/galera-data/galera-server.sh   
 
