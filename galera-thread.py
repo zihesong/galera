@@ -1,5 +1,6 @@
 '''
 scp -P 22 /Users/zoooesong/Workspaces/galera-thread.py nobi@pc311.emulab.net:/users/nobi/galera-data/galera-thread.py
+python3 galera-thread.py -n 1
 '''
 
 import linecache
@@ -287,12 +288,9 @@ def run_thread(id):
         start_pos += tmp_error
         total_error += error_num
         result_list.extend(extra_result_list)
-    # summary = []
     summary_line = "total = " + str(start_pos) + ", succeeded = " + str(start_pos-total_error) + ", failed = " + str(total_error)
-    # summary.append(summary_line)
     # result_list.append(summary_line)
-    result_list.insert(0, summary_line)
-    result_path = "./output/transaction/result_" + str(client) + ".txt"
+    result_path = "./output/result_" + str(client) + ".txt"
     write_result(result_list, result_path)
 
 
