@@ -5,10 +5,10 @@
 # scp -P 22 /Users/zoooesong/Workspaces/galera-server.sh nobi@pc479.emulab.net:/users/nobi/galera-data/galera-server.sh   
 
 #change parameter
-cluster_name="galera-824"
-server1="155.98.39.111"
-server2="155.98.39.104"
-server3="155.98.39.114"
+cluster_name="galera-1130"
+server1="155.98.38.154"
+server2="155.98.38.159"
+server3="155.98.38.153"
 
 name1="node-1"
 name2="node-2"
