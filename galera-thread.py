@@ -19,11 +19,11 @@ import matplotlib.pyplot as plt
 wo_rate=0.2
 ro_rate=0.2
 wr_rate = 0.5 # write
-transaction_num = 500
-operation_num = 2
-threads_num = 10
+transaction_num = 1000
+operation_num = 20
+threads_num = 9
 node_no=1
-server_id = ['155.98.39.111','155.98.39.104','155.98.39.114']
+server_id = ['155.98.38.154','155.98.38.159','155.98.38.153']
 
 try:
     opts, args = getopt.getopt(sys.argv[1:],"hw:r:p:t:o:c:n:",["help","wo_rate=","ro_rate=","w_percent=","trans_num=","op_num=","client_num=","node_no="])
@@ -237,12 +237,12 @@ def run_ops(list_of_ops, client_no, start_pos):
             print(temp_tx_op)
             e_flag = True
         connect.commit()
-        if e_flag == True:
-            state_op = 'op(' + str(i+start_pos) + ',0)'
-            e_count += 1
-        else:
-            state_op = 'op(' + str(i+start_pos) + ',1)'
-        temp_tx_op.append(state_op)
+        # if e_flag == True:
+        #     state_op = 'op(' + str(i+start_pos) + ',0)'
+        #     e_count += 1
+        # else:
+        #     state_op = 'op(' + str(i+start_pos) + ',1)'
+        # temp_tx_op.append(state_op)
         result_ops.append(temp_tx_op)
     cursor.close()
     connect.close()

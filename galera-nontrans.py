@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 
 wo_rate=0.5
 transaction_num = 500
-threads_num = 10
+threads_num = 9
 node_no=1
 autocommit = 0
 server_id = ['155.98.39.111','155.98.39.104','155.98.39.114']
