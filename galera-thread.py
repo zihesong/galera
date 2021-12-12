@@ -298,7 +298,8 @@ def run_thread(id):
 if __name__ == '__main__':
     threads =[]
     tlock=threading.Lock()
-    mkdir("./output/transaction/") 
+    if not os.path.exists("./output/transaction/"):
+        mkdir("./output/transaction/") 
     for i in range(threads_num):
         thread = myThread(i)
         threads.append(thread)
