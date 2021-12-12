@@ -20,11 +20,11 @@ import matplotlib.pyplot as plt
 wo_rate=0.2
 ro_rate=0.2
 wr_rate = 0.5 # write
-transaction_num = 100
-operation_num = 25
-threads_num = 10
+transaction_num = 30
+operation_num = 20
+threads_num = 3
 node_no=1
-server_id = ['155.98.38.154','155.98.38.159','155.98.38.153']
+server_id = ['155.98.39.140','155.98.39.74','155.98.39.124']
 
 try:
     opts, args = getopt.getopt(sys.argv[1:],"hw:r:p:t:o:c:n:",["help","wo_rate=","ro_rate=","w_percent=","trans_num=","op_num=","client_num=","node_no="])
@@ -51,7 +51,7 @@ except getopt.GetoptError:
     sys.exit()
 print("Parameters:\nwo_rate = " + str(wo_rate) + "\nro_rate = " + str(ro_rate) + "\nw_percent = " + str(wr_rate) + "\ntrans_num = " + str(transaction_num) + "\nop_num = " + str(operation_num) + "\nclient_num = " + str(threads_num) + "\nnode_no = " + str(node_no))
 
-key_num = 10
+key_num = 100
 e_threshold= 0.1*transaction_num
 total_op_num = transaction_num*operation_num
 
@@ -234,7 +234,7 @@ def run_ops(list_of_ops, client_no, start_pos):
             cursor.execute("COMMIT;")
         except Exception as e:
             print('Error in commit: {}'.format(e)) 
-            cursor.execute("ROLLBACK;")
+            # cursor.execute("ROLLBACK;")
             print(temp_tx_op)
             e_flag = True
         connect.commit()
@@ -242,9 +242,10 @@ def run_ops(list_of_ops, client_no, start_pos):
             state_op = 'op(' + str(i+start_pos) + ',0)'
             e_count += 1
         else:
-            state_op = 'op(' + str(i+start_pos) + ',1)'
+            # state_op = 'op(' + str(i+start_pos) + ',1)'
+            result_ops.append(temp_tx_op)
         # temp_tx_op.append(state_op)
-        result_ops.append(temp_tx_op)
+        # result_ops.append(temp_tx_op)
     cursor.close()
     connect.close()
     return result_ops, e_count

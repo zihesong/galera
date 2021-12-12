@@ -2,7 +2,7 @@
 
 # scp -P 22 /Users/zoooesong/Workspaces/galera-pre.sh nobi@pc479.emulab.net:/users/nobi/galera-data/galera-pre.sh 
 # cd galera-data
-# sh galera-pre.sh 155.98.38.154
+# sh galera-pre.sh 155.98.39.140
 
 server=$1
 rm -r client
