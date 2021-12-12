@@ -5,7 +5,7 @@
 # sh galera-pre.sh 155.98.39.140
 
 server=$1
-rm -r client
+rm -r galera/client
 ls
-python3 galera-db.py ${server}
+python3 galera/galera-db.py ${server}
 sudo mysql -h ${server} -u root -p123456 -e "select * from galera.variables;"
