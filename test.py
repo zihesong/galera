@@ -9,8 +9,8 @@ def run_oopsla_graph(raw_ops):
     wr = causal_hist.get_wr()
     causal_hist.vis_includes(wr)
     causal_hist.vis_is_trans()
-    if causal_hist.check_read_zero():
-        print('Read zero!')
+    # if causal_hist.check_read_zero():
+    #     print('Read zero!')
     ww = causal_hist.casual_ww()
     for key, ww_x in ww.items():
         causal_hist.vis_includes(ww_x)

@@ -1,9 +1,9 @@
 '''
 scp -P 22 /Users/zoooesong/Workspaces/galera-thread-nt.py nobi@pc817.emulab.net:/users/nobi/galera-data/galera-thread-nt.py
 
-scp -r nobi@pc554.emulab.net:/users/nobi/galera/client  /Users/zoe/Workspaces/galera-result/
+scp -r nobi@pc340.emulab.net:/users/nobi/galera/client  /Users/zoe/Workspaces/github/galera/
 
-scp -r nobi@pc554.emulab.net:/users/nobi/galera/output  /Users/zoe/Workspaces/galera-result/
+scp -r nobi@pc340.emulab.net:/users/nobi/galera/output  /Users/zoe/Workspaces/github/galera/
 '''
 
 import linecache

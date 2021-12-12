@@ -54,6 +54,8 @@ print("Parameters:\nwo_rate = " + str(wo_rate) + "\nro_rate = " + str(ro_rate) +
 key_num = 100
 e_threshold= 0.1*transaction_num
 total_op_num = transaction_num*operation_num
+time_num = time.time()
+folder_name = "./output/"+time_num+"/"
 
 
 
@@ -291,15 +293,14 @@ def run_thread(id):
         result_list.extend(extra_result_list)
     summary_line = "total = " + str(start_pos) + ", succeeded = " + str(start_pos-total_error) + ", failed = " + str(total_error)
     # result_list.append(summary_line)
-    result_path = "./output/result_" + str(client) + ".txt"
+    result_path = folder_name + "result_" + str(client) + ".txt"
     write_result(result_list, result_path)
 
 
 if __name__ == '__main__':
     threads =[]
     tlock=threading.Lock()
-    if not os.path.exists("./output/transaction/"):
-        mkdir("./output/transaction/") 
+    mkdir(folder_name) 
     for i in range(threads_num):
         thread = myThread(i)
         threads.append(thread)
