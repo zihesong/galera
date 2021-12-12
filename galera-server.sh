@@ -6,9 +6,9 @@
 
 #change parameter
 cluster_name="galera-1130"
-server1="155.98.38.154"
-server2="155.98.38.159"
-server3="155.98.38.153"
+server1="155.98.39.140"
+server2="155.98.39.74"
+server3="155.98.39.124"
 
 name1="node-1"
 name2="node-2"

@@ -52,7 +52,7 @@ except getopt.GetoptError:
 print("Parameters:\nwo_rate = " + str(wo_rate) + "\nro_rate = " + str(ro_rate) + "\nw_percent = " + str(wr_rate) + "\ntrans_num = " + str(transaction_num) + "\nop_num = " + str(operation_num) + "\nclient_num = " + str(threads_num) + "\nnode_no = " + str(node_no))
 
 key_num = 10
-e_threshold= 0.01*transaction_num
+e_threshold= 0.1*transaction_num
 total_op_num = transaction_num*operation_num
 
 
@@ -258,7 +258,7 @@ def write_result(result,file_path):
     for n_trans in range(len(result)-1):
         for n_ops in range(len(result[0])):
             f.write(result[n_trans][n_ops]+'\n')
-    f.write(str(result[len(result)-1]))
+    # f.write(str(result[len(result)-1]))
     f.close()
     print(file_path + ' is completed.')
 
