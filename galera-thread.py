@@ -24,10 +24,11 @@ transaction_num = 30
 operation_num = 20
 threads_num = 3
 node_no=1
+folder_num = 0
 server_id = ['155.98.39.140','155.98.39.74','155.98.39.124']
 
 try:
-    opts, args = getopt.getopt(sys.argv[1:],"hw:r:p:t:o:c:n:",["help","wo_rate=","ro_rate=","w_percent=","trans_num=","op_num=","client_num=","node_no="])
+    opts, args = getopt.getopt(sys.argv[1:],"hw:r:p:t:o:c:n:f",["help","wo_rate=","ro_rate=","w_percent=","trans_num=","op_num=","client_num=","node_no=","folder_num"])
     for opt, arg in opts:
         if opt in ('-w','--wo_rate'):
             wo_rate = float(arg)
@@ -43,19 +44,20 @@ try:
             threads_num = int(arg)
         elif opt in ('-n','--node_no'):
             node_no = int(arg)
+        elif opt in ('-f','--folder_num'):
+            folder_num = str(arg)
         elif opt in ('-h','--help'):
-            print("python3 galera-thread.py -w <wo_rate> -r <ro_rate> -p <w_percent> -t <trans_num> -o <op_num> -c <client_num> -n <node_no>")
+            print("python3 galera-thread.py -w <wo_rate> -r <ro_rate> -p <w_percent> -t <trans_num> -o <op_num> -c <client_num> -n <node_no> -f <folder_num>")
             sys.exit()
 except getopt.GetoptError:
     print("python3 galera-thread.py -w <wo_rate> -r <ro_rate> -p <w_percent> -t <trans_num> -o <op_num> -c <client_num> -n <node_no>")
     sys.exit()
-print("Parameters:\nwo_rate = " + str(wo_rate) + "\nro_rate = " + str(ro_rate) + "\nw_percent = " + str(wr_rate) + "\ntrans_num = " + str(transaction_num) + "\nop_num = " + str(operation_num) + "\nclient_num = " + str(threads_num) + "\nnode_no = " + str(node_no))
+print("Parameters:\nwo_rate = " + str(wo_rate) + "\nro_rate = " + str(ro_rate) + "\nw_percent = " + str(wr_rate) + "\ntrans_num = " + str(transaction_num) + "\nop_num = " + str(operation_num) + "\nclient_num = " + str(threads_num) + "\nnode_no = " + str(node_no) + "\nfolder_num = " + str(folder_num))
 
 key_num = 100
 e_threshold= 0.1*transaction_num
 total_op_num = transaction_num*operation_num
-time_num = str(time.time())
-folder_name = "./output/"+time_num+"/"
+folder_name = "./output/"+str(folder_num)+"/"
 
 
 
