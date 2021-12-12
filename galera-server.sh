@@ -1,11 +1,10 @@
 #! /bin/bash
 
 # sh galera/galera-server.sh 1
-# sudo nano /etc/mysql/conf.d/galera.cnf
 # scp -P 22 /Users/zoooesong/Workspaces/galera-server.sh nobi@pc479.emulab.net:/users/nobi/galera-data/galera-server.sh   
 
 #change parameter
-cluster_name="galera-1130"
+cluster_name="galera-1212"
 server1="155.98.39.140"
 server2="155.98.39.74"
 server3="155.98.39.124"
