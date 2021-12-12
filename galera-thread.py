@@ -24,11 +24,11 @@ transaction_num = 30
 operation_num = 20
 threads_num = 3
 node_no=1
-folder_num = 0
+folder_num = 11
 server_id = ['155.98.39.140','155.98.39.74','155.98.39.124']
 
 try:
-    opts, args = getopt.getopt(sys.argv[1:],"hw:r:p:t:o:c:n:f",["help","wo_rate=","ro_rate=","w_percent=","trans_num=","op_num=","client_num=","node_no=","folder_num"])
+    opts, args = getopt.getopt(sys.argv[1:],"hw:r:p:t:o:c:n:f:",["help","wo_rate=","ro_rate=","w_percent=","trans_num=","op_num=","client_num=","node_no=","folder_num="])
     for opt, arg in opts:
         if opt in ('-w','--wo_rate'):
             wo_rate = float(arg)
