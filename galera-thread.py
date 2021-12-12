@@ -54,7 +54,7 @@ print("Parameters:\nwo_rate = " + str(wo_rate) + "\nro_rate = " + str(ro_rate) +
 key_num = 100
 e_threshold= 0.1*transaction_num
 total_op_num = transaction_num*operation_num
-time_num = time.time()
+time_num = str(time.time())
 folder_name = "./output/"+time_num+"/"
 
 
