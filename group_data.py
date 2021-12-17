@@ -18,7 +18,7 @@ for i in range(10):
     ops = []
     for file in file_list:
         ops += linecache.getlines(folder_name + file)
-    ops_per_trans = 3
+    ops_per_trans = 10
     with open(folder_name + 'result.txt', 'w') as f:
         now_id = 0
         cnt = ops_per_trans
