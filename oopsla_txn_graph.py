@@ -183,3 +183,25 @@ class OopslaAtomicHistoryPO:
                     if t_node['op_type'] == 'r' and t_node['val'] == '0' and t_node['var'] in w_vars:
                         return True
         return False
+
+
+if __name__ == '__main__':
+    for i in range(50):
+        folder_name = "output/"+str(i)+"/result.txt"
+        # print(folder_name)
+        with open(folder_name) as in_file:
+            raw_ops = in_file.readlines()
+
+        causal_hist = OopslaAtomicHistoryPO(raw_ops)
+        wr = causal_hist.get_wr()
+        causal_hist.vis_includes(wr)
+        causal_hist.vis_is_trans()
+        if causal_hist.vis.has_cycle():
+            print('BP111111 found in' + str(i))
+
+        ww = causal_hist.casual_ww()
+        for key, ww_x in ww.items():
+            causal_hist.vis_includes(ww_x)
+        causal_hist.vis_is_trans()
+        if causal_hist.vis.has_cycle():
+            print('BP222222 found in' + str(i))

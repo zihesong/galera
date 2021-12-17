@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for ((j=0;j<500;j++));do
+for ((j=0;j<50;j++));do
 {
     for ((i=1;i<4;i++));do
     { 
