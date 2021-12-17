@@ -238,7 +238,7 @@ def run_ops(list_of_ops, client_no, start_pos):
             cursor.execute("COMMIT;")
         except Exception as e:
             print('Error in commit: {}'.format(e)) 
-            # cursor.execute("ROLLBACK;")
+            cursor.execute("ROLLBACK;")
             print(temp_tx_op)
             e_flag = True
         connect.commit()
