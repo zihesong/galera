@@ -20,8 +20,8 @@ import matplotlib.pyplot as plt
 wo_rate=0.2
 ro_rate=0.2
 wr_rate = 0.5 # write
-transaction_num = 15
-operation_num = 15
+transaction_num = 20
+operation_num = 20
 threads_num = 1
 node_no=1
 folder_num = 11
