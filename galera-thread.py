@@ -20,9 +20,9 @@ import matplotlib.pyplot as plt
 wo_rate=0.2
 ro_rate=0.2
 wr_rate = 0.5 # write
-transaction_num = 30
-operation_num = 20
-threads_num = 2
+transaction_num = 10
+operation_num = 10
+threads_num = 1
 node_no=1
 folder_num = 11
 server_id = ['155.98.39.140','155.98.39.74','155.98.39.124']
@@ -54,7 +54,7 @@ except getopt.GetoptError:
     sys.exit()
 print("Parameters:\nwo_rate = " + str(wo_rate) + "\nro_rate = " + str(ro_rate) + "\nw_percent = " + str(wr_rate) + "\ntrans_num = " + str(transaction_num) + "\nop_num = " + str(operation_num) + "\nclient_num = " + str(threads_num) + "\nnode_no = " + str(node_no) + "\nfolder_num = " + str(folder_num))
 
-key_num = 360
+key_num = 10
 e_threshold= 0.1*transaction_num
 total_op_num = transaction_num*operation_num
 folder_name = "./output/"+str(folder_num)+"/"
@@ -238,7 +238,7 @@ def run_ops(list_of_ops, client_no, start_pos):
             cursor.execute("COMMIT;")
         except Exception as e:
             print('Error in commit: {}'.format(e)) 
-            # cursor.execute("ROLLBACK;")
+            cursor.execute("ROLLBACK;")
             print(temp_tx_op)
             e_flag = True
         connect.commit()
