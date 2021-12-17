@@ -186,7 +186,7 @@ class OopslaAtomicHistoryPO:
 
 
 if __name__ == '__main__':
-    for i in range(4):
+    for i in range(2):
         folder_name = "output/"+str(i)+"/result.txt"
         # print(folder_name)
         with open(folder_name) as in_file:
