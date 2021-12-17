@@ -8,4 +8,4 @@ server=$1
 rm -r client
 ls
 python3 galera/galera-db.py ${server}
-sudo mysql -h ${server} -u root -p123456 -e "select * from galera.variables;"
+# sudo mysql -h ${server} -u root -p123456 -e "select * from galera.variables;"
