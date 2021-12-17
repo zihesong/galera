@@ -12,7 +12,7 @@ def get_op(op):
         'tra_id': int(arr[3]),
     }
 
-for i in range(10):
+for i in range(100):
     folder_name = 'output/' + str(i) + '/'
     file_list = [fn for fn in os.listdir(folder_name) if fn.endswith('.txt')]
     ops = []
