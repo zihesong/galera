@@ -210,7 +210,7 @@ class OopslaAtomicHistoryPO:
 
 
 if __name__ == '__main__':
-    for i in range(10):
+    for i in range(500):
         folder_name = "output/"+str(i)+"/result.txt"
         with open(folder_name) as in_file:
             raw_ops = in_file.readlines()

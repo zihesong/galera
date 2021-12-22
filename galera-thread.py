@@ -372,8 +372,10 @@ def run_thread(id):
 if __name__ == '__main__':
     threads =[]
     tlock=threading.Lock()
-    mk_dir(folder_name)
-    mk_dir(hist_folder) 
+    os.makedirs(folder_name, exist_ok=True)
+    os.makedirs(hist_folder, exist_ok=True)
+    # mk_dir(folder_name)
+    # mk_dir(hist_folder) 
     for i in range(threads_num):
         thread = myThread(i)
         threads.append(thread)
