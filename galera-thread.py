@@ -52,7 +52,7 @@ try:
 except getopt.GetoptError:
     print("python3 galera-thread.py -w <wo_rate> -r <ro_rate> -p <w_percent> -t <trans_num> -o <op_num> -c <client_num> -n <node_no>")
     sys.exit()
-print("Parameters:\nwo_rate = " + str(wo_rate) + "\nro_rate = " + str(ro_rate) + "\nw_percent = " + str(wr_rate) + "\ntrans_num = " + str(transaction_num) + "\nop_num = " + str(operation_num) + "\nclient_num = " + str(threads_num) + "\nnode_no = " + str(node_no) + "\nfolder_num = " + str(folder_num))
+# print("Parameters:\nwo_rate = " + str(wo_rate) + "\nro_rate = " + str(ro_rate) + "\nw_percent = " + str(wr_rate) + "\ntrans_num = " + str(transaction_num) + "\nop_num = " + str(operation_num) + "\nclient_num = " + str(threads_num) + "\nnode_no = " + str(node_no) + "\nfolder_num = " + str(folder_num))
 
 key_num = 30
 total_op_num = transaction_num*operation_num
@@ -147,7 +147,7 @@ def uniform_generator(output_path, client, trans, ops, var):
         else:
             print("Error in trans_type!")
     doc.close()
-    print(output_path+"hist_"+str(client)+".txt"+" succeeded.")
+    # print(output_path+"hist_"+str(client)+".txt"+" succeeded.")
 
 
 def random_pick(some_list, probabilities): 
@@ -165,7 +165,7 @@ def random_pick(some_list, probabilities):
 
 def generate_opt(hist_file, trans_num): 
     fo = open(hist_file, "r")
-    print ("Select hist file:", fo.name)
+    # print ("Select hist file:", fo.name)
     list_line = []
     for line in fo.readlines():
         line = line.strip()                            
@@ -210,7 +210,7 @@ def run_ops(list_of_ops, client_no):
                     single_op = 'w(' + str(key) + ',' + str(val) + ',' + str(client_no) + ',' + str(i) + ',' + str(op_num) + ')'
                 except Exception as e:
                     print('Error in write: {}'.format(e)) 
-                    print(temp_tx_op)
+                    # print(temp_tx_op)
                     single_op = 'w(' + str(key) + ',' + str(val) + ',' + str(client_no) + ',' + str(i) + ',' + str(op_num) + ')'
                     e_flag = True
             elif(op[0] == 'read'):
@@ -221,7 +221,7 @@ def run_ops(list_of_ops, client_no):
                     single_op = 'r(' + str(key) + ',' + str(record_val) + ',' + str(client_no) + ',' + str(i) + ',' + str(op_num) + ')'
                 except Exception as e:
                     print('Error in read: {}'.format(e)) 
-                    print(temp_tx_op)
+                    # print(temp_tx_op)
                     single_op = 'r(' + str(key) + ',' + str(record_val) + ',' + str(client_no) + ',' + str(i) + ',' + str(op_num) + ')'
                     e_flag = True
             else:
@@ -234,7 +234,7 @@ def run_ops(list_of_ops, client_no):
         except Exception as e:
             print('Error in commit: {}'.format(e)) 
             # cursor.execute("ROLLBACK;")
-            print(temp_tx_op)
+            # print(temp_tx_op)
             e_flag = True
         connect.commit()
         if e_flag == False:
