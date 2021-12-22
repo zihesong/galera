@@ -20,8 +20,8 @@ import matplotlib.pyplot as plt
 wo_rate=0.2
 ro_rate=0.2
 wr_rate = 0.5 # write
-transaction_num = 30
-operation_num = 30
+transaction_num = 20
+operation_num = 25
 threads_num = 2
 node_no=1
 folder_num = 11
@@ -55,7 +55,7 @@ except getopt.GetoptError:
 # print("Parameters:\nwo_rate = " + str(wo_rate) + "\nro_rate = " + str(ro_rate) + "\nw_percent = " + str(wr_rate) + "\ntrans_num = " + str(transaction_num) + "\nop_num = " + str(operation_num) + "\nclient_num = " + str(threads_num) + "\nnode_no = " + str(node_no) + "\nfolder_num = " + str(folder_num))
 
 key_num = 20
-total_op_num = transaction_num*operation_num
+total_op_num = 2*transaction_num*operation_num
 folder_name = "./output/"+str(folder_num)+"/"
 hist_folder = "./client/"+str(folder_num)+"/"
 
@@ -99,6 +99,83 @@ class Operation:
     #         print("read," + str(variable) + "," + str(value))
     #     else:
     #         print("Error in Operation op_type!")
+
+
+def Zipf(a: np.float64, min: np.uint64, max: np.uint64, size=None):
+    """
+    Generate Zipf-like random variables,
+    but in inclusive [min...max] interval
+    """
+    if min == 0:
+        raise ZeroDivisionError("")
+
+    v = np.arange(min, max+1) # values to sample
+    p = 1.0 / np.power(v, a)  # probabilities
+    p /= np.sum(p)            # normalized
+
+    return np.random.choice(v, size=size, replace=True, p=p)
+
+
+
+def zipf_generator(output_path, client, trans, ops, var):
+    '''
+    output_path: hist file path
+    client: client No.
+    trans: trans num for each client
+    ops: operation num for each trans
+    var: key num
+    wr: rate of w/r
+    '''
+    doc = open(output_path+"hist_"+str(client)+".txt",'w')
+    counter = client * total_op_num * 2
+    min = np.uint64(1)
+    max = np.uint64(var)
+    q = Zipf(1, min, max, trans*ops)
+    var_list = [int(x)-1 for x in q]
+    var_count = 0
+    for t in range (0,trans):
+        trans_type = random_pick([0,1,2],[wo_rate,ro_rate,1-wo_rate-ro_rate])
+        if trans_type == 0:
+            for op in range (0,ops):
+                variable = var_list[var_count]
+                var_count += 1
+                counter += 1
+                new_op = Operation(True,variable,counter)
+                doc.write("write," + str(new_op.variable) + "," + str(new_op.value)+"\n")
+        elif trans_type == 1:
+            for op in range (0,ops):
+                variable = var_list[var_count]
+                var_count += 1
+                new_op = Operation(False,variable,0)
+                doc.write("read," + str(new_op.variable) + "," + str(new_op.value)+"\n")
+        elif trans_type == 2:
+            w_count = 0
+            r_count = 0
+            for i in range (0,ops):
+                op_type = random_pick([0,1],[wr_rate,1-wr_rate])
+                if op_type == 0:
+                    w_count += 1
+                elif op_type == 1:
+                    r_count += 1
+                else:
+                    print("Error in op_type!")
+            for r in range(r_count):
+                variable = var_list[var_count]
+                var_count += 1
+                new_op = Operation(False,variable,0)
+                doc.write("read," + str(new_op.variable) + "," + str(new_op.value)+"\n")
+            for w in range(w_count):
+                variable = var_list[var_count]
+                var_count += 1
+                counter += 1
+                new_op = Operation(True,variable,counter)
+                doc.write("write," + str(new_op.variable) + "," + str(new_op.value)+"\n")
+        else:
+            print("Error in trans_type!")
+    doc.close()
+    # print(output_path+"hist_"+str(client)+".txt"+" succeeded.")
+
+
 
 
 def uniform_generator(output_path, client, trans, ops, var):
@@ -269,7 +346,7 @@ def write_result(result,file_path, error_num):
 
 def run_thread(id):
     client = int((node_no-1)*threads_num+id)
-    uniform_generator(hist_folder, client, 3*transaction_num, operation_num, key_num)
+    zipf_generator(hist_folder, client, 3*transaction_num, operation_num, key_num)
     file_path = hist_folder + "hist_" + str(client) + ".txt"
     hist_list = generate_opt(file_path, 3*transaction_num)
     result_list, error_num = run_ops(hist_list,client)

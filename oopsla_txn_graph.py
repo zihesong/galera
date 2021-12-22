@@ -4,6 +4,9 @@ import copy
 class DiGraph:
     def __init__(self):
         self.adj_map = {}
+        self.visited = []
+        self.trace = []
+        self.boo_cycle = False
 
     def add_edge(self, from_node, to_node):
         if from_node in self.adj_map:
@@ -31,14 +34,33 @@ class DiGraph:
         for key in list(self.adj_map.keys()):
             reachable = set()
             if self.dfs_util_reach(key, key, reachable):
+                print("reach key is: " + str(key))
                 return True
         return False
+
+    def find_cycle(self,start_node):
+        if start_node in self.visited:
+            if start_node in self.trace:
+                self.boo_cycle = True
+                trace_index = self.trace.index(start_node)
+                for i in range(trace_index, len(self.trace)):
+                    print(str(self.trace[i]) + ' ', end='')
+                print('\n', end='')
+                return
+            return
+        self.visited.append(start_node)
+        self.trace.append(start_node)
+
+        if start_node != '' :
+            for node in self.adj_map[start_node]:
+                if node in self.adj_map:
+                    self.find_cycle(node)
+        self.trace.pop()
 
     def dfs_util_reach(self, s, u, reachable):
         if u in self.adj_map:
             for node in self.adj_map[u]:
                 if node == s:
-                    print("that is" + str(s))
                     return True
                 elif node in reachable:
                     continue
@@ -141,6 +163,7 @@ class OopslaAtomicHistoryPO:
             'tra_id': int(arr[3]),
         }
 
+
     def get_wr(self):
         wr = DiGraph()
         for key, digraph in self.wr_rel.items():
@@ -187,7 +210,7 @@ class OopslaAtomicHistoryPO:
 
 
 if __name__ == '__main__':
-    for i in range(100):
+    for i in range(10):
         folder_name = "output/"+str(i)+"/result.txt"
         with open(folder_name) as in_file:
             raw_ops = in_file.readlines()
@@ -197,11 +220,12 @@ if __name__ == '__main__':
         causal_hist.vis_includes(wr)
         causal_hist.vis_is_trans()
         if causal_hist.vis.has_cycle():
-            print('BP111111 found in' + str(i))
+            print('BP111111 found in: ' + str(i))
 
         ww = causal_hist.casual_ww()
         for key, ww_x in ww.items():
             causal_hist.vis_includes(ww_x)
         causal_hist.vis_is_trans()
         if causal_hist.vis.has_cycle():
-            print('BP222222 found in' + str(i))
+            print('BP222222 found in: ' + str(i))
+            print(causal_hist.vis.find_cycle(0))
