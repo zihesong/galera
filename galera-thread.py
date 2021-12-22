@@ -61,7 +61,7 @@ hist_folder = "./client/"+str(folder_num)+"/"
 
 
 
-def mkdir(path):
+def mk_dir(path):
 	folder = os.path.exists(path)
 	if not folder:                   
 		os.makedirs(path)            
@@ -295,8 +295,8 @@ def run_thread(id):
 if __name__ == '__main__':
     threads =[]
     tlock=threading.Lock()
-    mkdir(folder_name)
-    mkdir(hist_folder) 
+    mk_dir(folder_name)
+    mk_dir(hist_folder) 
     for i in range(threads_num):
         thread = myThread(i)
         threads.append(thread)
