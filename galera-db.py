@@ -9,7 +9,7 @@ import mariadb
 
 
 server = sys.argv[1]
-key = 100
+key = 30
 
 connect = mariadb.connect(host=server, user="root",password="123456")
 # Disable Auto-Commit

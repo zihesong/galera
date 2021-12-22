@@ -54,7 +54,7 @@ except getopt.GetoptError:
     sys.exit()
 print("Parameters:\nwo_rate = " + str(wo_rate) + "\nro_rate = " + str(ro_rate) + "\nw_percent = " + str(wr_rate) + "\ntrans_num = " + str(transaction_num) + "\nop_num = " + str(operation_num) + "\nclient_num = " + str(threads_num) + "\nnode_no = " + str(node_no) + "\nfolder_num = " + str(folder_num))
 
-key_num = 100
+key_num = 30
 total_op_num = transaction_num*operation_num
 folder_name = "./output/"+str(folder_num)+"/"
 
@@ -248,6 +248,8 @@ def run_ops(list_of_ops, client_no):
         # result_ops.append(temp_tx_op)
     cursor.close()
     connect.close()
+    if t_count < transaction_num:
+        print("################################################################################################################UNFINISH################################################################################################################")
     return result_ops, e_count
 
 def write_result(result,file_path, error_num):
@@ -268,9 +270,9 @@ def run_thread(id):
     client = int((node_no-1)*threads_num+id)
     path = './client/' + str(client) + '/'
     mkdir(path) 
-    uniform_generator(path, client, 2*transaction_num, operation_num, key_num)
+    uniform_generator(path, client, 3*transaction_num, operation_num, key_num)
     file_path = path + "hist_" + str(client) + ".txt"
-    hist_list = generate_opt(file_path, 2*transaction_num)
+    hist_list = generate_opt(file_path, 3*transaction_num)
     result_list, error_num = run_ops(hist_list,client)
     # while(error_num > e_threshold):
     #     rerun_count += 1
