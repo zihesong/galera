@@ -15,7 +15,7 @@ for ((j=0;j<100;j++));do
     done
     wait
 
-    ssh -t -p 22 nobi@pc354.emulab.net "sh galera/galera-pre.sh 155.98.39.154; exit"
+    ssh -t -p 22 nobi@pc354.emulab.net "python3 galera/galera-db.py 155.98.39.154; exit"
 }
 done
 

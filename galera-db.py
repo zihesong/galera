@@ -1,7 +1,6 @@
 '''
 scp -P 22 /Users/zoooesong/Workspaces/galera-db.py nobi@pc479.emulab.net:/users/nobi/galera-data/galera-db.py
-python3 galera-db.py
-sudo mysql -h 155.98.38.79 -u root -p123456 -e "select * from galera.variables;"
+python3 galera/galera-db.py 155.98.39.154
 '''
 
 import os,sys
