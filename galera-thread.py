@@ -210,7 +210,7 @@ def run_ops(list_of_ops, client_no):
                     cursor.execute("UPDATE galera.variables SET val=%d WHERE var=%d;" % (val,key))
                     single_op = 'w(' + str(key) + ',' + str(val) + ',' + str(client_no) + ',' + str(i) + ',' + str(op_num) + ')'
                 except Exception as e:
-                    print('Error in write: {}'.format(e)) 
+                    # print('Error in write: {}'.format(e)) 
                     # print(temp_tx_op)
                     single_op = 'w(' + str(key) + ',' + str(val) + ',' + str(client_no) + ',' + str(i) + ',' + str(op_num) + ')'
                     e_flag = True
@@ -221,7 +221,7 @@ def run_ops(list_of_ops, client_no):
                     record_val = return_val[0][0]
                     single_op = 'r(' + str(key) + ',' + str(record_val) + ',' + str(client_no) + ',' + str(i) + ',' + str(op_num) + ')'
                 except Exception as e:
-                    print('Error in read: {}'.format(e)) 
+                    # print('Error in read: {}'.format(e)) 
                     # print(temp_tx_op)
                     single_op = 'r(' + str(key) + ',' + str(record_val) + ',' + str(client_no) + ',' + str(i) + ',' + str(op_num) + ')'
                     e_flag = True
@@ -233,7 +233,7 @@ def run_ops(list_of_ops, client_no):
         try:
             cursor.execute("COMMIT;")
         except Exception as e:
-            print('Error in commit: {}'.format(e)) 
+            # print('Error in commit: {}'.format(e)) 
             # cursor.execute("ROLLBACK;")
             # print(temp_tx_op)
             e_flag = True
@@ -269,10 +269,8 @@ def write_result(result,file_path, error_num):
 
 def run_thread(id):
     client = int((node_no-1)*threads_num+id)
-    path = hist_folder + str(client) + '/'
-    mkdir(path) 
-    uniform_generator(path, client, 3*transaction_num, operation_num, key_num)
-    file_path = path + "hist_" + str(client) + ".txt"
+    uniform_generator(hist_folder, client, 3*transaction_num, operation_num, key_num)
+    file_path = hist_folder + "hist_" + str(client) + ".txt"
     hist_list = generate_opt(file_path, 3*transaction_num)
     result_list, error_num = run_ops(hist_list,client)
     # while(error_num > e_threshold):
@@ -297,7 +295,8 @@ def run_thread(id):
 if __name__ == '__main__':
     threads =[]
     tlock=threading.Lock()
-    mkdir(folder_name) 
+    mkdir(folder_name)
+    mkdir(hist_folder) 
     for i in range(threads_num):
         thread = myThread(i)
         threads.append(thread)
