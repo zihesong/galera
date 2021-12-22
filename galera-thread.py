@@ -194,7 +194,7 @@ def run_ops(list_of_ops, client_no):
     t_count = 0
     e_count = 0
     for i in range(len(list_of_ops)):
-        if t_count == transaction_num:
+        if t_count > transaction_num:
             break
         cursor = connect.cursor()
         cursor.execute("START TRANSACTION;")

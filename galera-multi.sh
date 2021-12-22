@@ -19,4 +19,4 @@ for ((j=0;j<30;j++));do
 }
 done
 
-scp -r nobi@pc340.emulab.net:/users/nobi/output  /Users/zoe/Workspaces/github/galera/
+scp -r nobi@pc354.emulab.net:/users/nobi/output  /Users/zoe/Workspaces/github/galera/
