@@ -57,6 +57,7 @@ except getopt.GetoptError:
 key_num = 20
 total_op_num = transaction_num*operation_num
 folder_name = "./output/"+str(folder_num)+"/"
+hist_folder = "./client/"+str(folder_num)+"/"
 
 
 
@@ -268,7 +269,7 @@ def write_result(result,file_path, error_num):
 
 def run_thread(id):
     client = int((node_no-1)*threads_num+id)
-    path = './client/' + str(client) + '/'
+    path = hist_folder + str(client) + '/'
     mkdir(path) 
     uniform_generator(path, client, 3*transaction_num, operation_num, key_num)
     file_path = path + "hist_" + str(client) + ".txt"
