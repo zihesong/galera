@@ -248,7 +248,7 @@ def run_ops(list_of_ops, client_no):
         # result_ops.append(temp_tx_op)
     cursor.close()
     connect.close()
-    return result_ops
+    return result_ops, e_count
 
 def write_result(result,file_path, error_num):
     '''
