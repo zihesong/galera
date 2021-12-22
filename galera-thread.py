@@ -100,7 +100,7 @@ class Operation:
     #         print("Error in Operation op_type!")
 
 
-def uniform_generator(output_path, client, trans, ops, var, rerun_count):
+def uniform_generator(output_path, client, trans, ops, var):
     '''
     output_path: hist file path
     client: client No.
@@ -109,11 +109,8 @@ def uniform_generator(output_path, client, trans, ops, var, rerun_count):
     var: key num
     wr: rate of w/r
     '''
-    if rerun_count == 0:
-        doc = open(output_path+"hist_"+str(client)+".txt",'w')
-    else:
-        doc = open(output_path+"hist_"+str(client)+"_"+str(rerun_count)+".txt",'w')
-    counter = client * total_op_num
+    doc = open(output_path+"hist_"+str(client)+".txt",'w')
+    counter = client * total_op_num * 2
     for t in range (0,trans):
         trans_type = random_pick([0,1,2],[wo_rate,ro_rate,1-wo_rate-ro_rate])
         if trans_type == 0:
@@ -150,11 +147,7 @@ def uniform_generator(output_path, client, trans, ops, var, rerun_count):
         else:
             print("Error in trans_type!")
     doc.close()
-    if rerun_count == 0:
-        print(output_path+"hist_"+str(client)+".txt"+" succeeded.")
-    else:
-        print(output_path+"hist_"+str(client)+"_"+str(rerun_count)+".txt"+" succeeded.")
-    
+    print(output_path+"hist_"+str(client)+".txt"+" succeeded.")
 
 
 def random_pick(some_list, probabilities): 
@@ -180,7 +173,7 @@ def generate_opt(hist_file, trans_num):
     fo.close()
     list_trans = []
     op_count=0
-    for i in range(0,2*trans_num):
+    for i in range(0,trans_num):
         temp_ops = []
         for j in range(0,operation_num):
             temp_ops.append(list_line[op_count])
@@ -189,7 +182,7 @@ def generate_opt(hist_file, trans_num):
     return list_trans
 
 
-def run_ops(list_of_ops, client_no, start_pos):
+def run_ops(list_of_ops, client_no):
     op_num = 0
     result_ops = []
     server_num = random_pick([0,1,2],[0.34,0.33,0.33])
@@ -214,22 +207,22 @@ def run_ops(list_of_ops, client_no, start_pos):
                 val = int(op[2])
                 try:
                     cursor.execute("UPDATE galera.variables SET val=%d WHERE var=%d;" % (val,key))
-                    single_op = 'w(' + str(key) + ',' + str(val) + ',' + str(client_no) + ',' + str(start_pos+i) + ',' + str(start_pos*operation_num+op_num) + ')'
+                    single_op = 'w(' + str(key) + ',' + str(val) + ',' + str(client_no) + ',' + str(i) + ',' + str(op_num) + ')'
                 except Exception as e:
                     print('Error in write: {}'.format(e)) 
                     print(temp_tx_op)
-                    single_op = 'w(' + str(key) + ',' + str(val) + ',' + str(client_no) + ',' + str(start_pos+i) + ',' + str(start_pos*operation_num+op_num) + ')'
+                    single_op = 'w(' + str(key) + ',' + str(val) + ',' + str(client_no) + ',' + str(i) + ',' + str(op_num) + ')'
                     e_flag = True
             elif(op[0] == 'read'):
                 try:
                     cursor.execute("SELECT val FROM galera.variables WHERE var=%d;" % key)
                     return_val = cursor.fetchall()
                     record_val = return_val[0][0]
-                    single_op = 'r(' + str(key) + ',' + str(record_val) + ',' + str(client_no) + ',' + str(start_pos+i) + ',' + str(start_pos*operation_num+op_num) + ')'
+                    single_op = 'r(' + str(key) + ',' + str(record_val) + ',' + str(client_no) + ',' + str(i) + ',' + str(op_num) + ')'
                 except Exception as e:
                     print('Error in read: {}'.format(e)) 
                     print(temp_tx_op)
-                    single_op = 'r(' + str(key) + ',' + str(record_val) + ',' + str(client_no) + ',' + str(start_pos+i) + ',' + str(start_pos*operation_num+op_num) + ')'
+                    single_op = 'r(' + str(key) + ',' + str(record_val) + ',' + str(client_no) + ',' + str(i) + ',' + str(op_num) + ')'
                     e_flag = True
             else:
                 print("Unknown wrong type op: '%s'" % op[0])
@@ -272,16 +265,13 @@ def write_result(result,file_path, error_num):
 
 
 def run_thread(id):
-    start_pos = 0
-    rerun_count = 0
     client = int((node_no-1)*threads_num+id)
     path = './client/' + str(client) + '/'
     mkdir(path) 
-    uniform_generator(path, client, transaction_num, operation_num, key_num, rerun_count)
+    uniform_generator(path, client, 2*transaction_num, operation_num, key_num)
     file_path = path + "hist_" + str(client) + ".txt"
-    hist_list = generate_opt(file_path, transaction_num)
-    result_list, error_num = run_ops(hist_list,client,start_pos)
-    start_pos += transaction_num
+    hist_list = generate_opt(file_path, 2*transaction_num)
+    result_list, error_num = run_ops(hist_list,client)
     # while(error_num > e_threshold):
     #     rerun_count += 1
     #     tmp_error = error_num
