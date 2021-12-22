@@ -38,6 +38,7 @@ class DiGraph:
         if u in self.adj_map:
             for node in self.adj_map[u]:
                 if node == s:
+                    print("that is" + str(s))
                     return True
                 elif node in reachable:
                     continue
@@ -186,7 +187,7 @@ class OopslaAtomicHistoryPO:
 
 
 if __name__ == '__main__':
-    for i in range(100):
+    for i in range(1):
         folder_name = "output/"+str(i)+"/result.txt"
         # print(folder_name)
         with open(folder_name) as in_file:

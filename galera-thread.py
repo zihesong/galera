@@ -55,7 +55,6 @@ except getopt.GetoptError:
 print("Parameters:\nwo_rate = " + str(wo_rate) + "\nro_rate = " + str(ro_rate) + "\nw_percent = " + str(wr_rate) + "\ntrans_num = " + str(transaction_num) + "\nop_num = " + str(operation_num) + "\nclient_num = " + str(threads_num) + "\nnode_no = " + str(node_no) + "\nfolder_num = " + str(folder_num))
 
 key_num = 360
-e_threshold= 0.1*transaction_num
 total_op_num = transaction_num*operation_num
 folder_name = "./output/"+str(folder_num)+"/"
 
@@ -181,7 +180,7 @@ def generate_opt(hist_file, trans_num):
     fo.close()
     list_trans = []
     op_count=0
-    for i in range(0,trans_num):
+    for i in range(0,2*trans_num):
         temp_ops = []
         for j in range(0,operation_num):
             temp_ops.append(list_line[op_count])
@@ -199,8 +198,11 @@ def run_ops(list_of_ops, client_no, start_pos):
     connect = mariadb.connect(host=server, user="root",password="123456")
     # Disable Auto-Commit
     connect.autocommit = False
+    t_count = 0
     e_count = 0
     for i in range(len(list_of_ops)):
+        if t_count == transaction_num:
+            break
         cursor = connect.cursor()
         cursor.execute("START TRANSACTION;")
         temp_tx_op = []
@@ -238,23 +240,24 @@ def run_ops(list_of_ops, client_no, start_pos):
             cursor.execute("COMMIT;")
         except Exception as e:
             print('Error in commit: {}'.format(e)) 
-            cursor.execute("ROLLBACK;")
+            # cursor.execute("ROLLBACK;")
             print(temp_tx_op)
             e_flag = True
         connect.commit()
-        if e_flag == True:
-            state_op = 'op(' + str(i+start_pos) + ',0)'
-            e_count += 1
+        if e_flag == False:
+            # state_op = 'op(' + str(i+start_pos) + ',0)'
+            t_count += 1
+            result_ops.append(temp_tx_op)
         else:
             # state_op = 'op(' + str(i+start_pos) + ',1)'
-            result_ops.append(temp_tx_op)
+            e_count += 1
         # temp_tx_op.append(state_op)
         # result_ops.append(temp_tx_op)
     cursor.close()
     connect.close()
-    return result_ops, e_count
+    return result_ops
 
-def write_result(result,file_path):
+def write_result(result,file_path, error_num):
     '''
         result_single_history is a three dimensional list
         file is the output path
@@ -265,7 +268,7 @@ def write_result(result,file_path):
             f.write(result[n_trans][n_ops]+'\n')
     # f.write(str(result[len(result)-1]))
     f.close()
-    print(file_path + ' is completed.')
+    print(file_path + ' is completed, contain error: ', error_num)
 
 
 def run_thread(id):
@@ -279,24 +282,23 @@ def run_thread(id):
     hist_list = generate_opt(file_path, transaction_num)
     result_list, error_num = run_ops(hist_list,client,start_pos)
     start_pos += transaction_num
-    total_error = error_num
-    while(error_num > e_threshold):
-        rerun_count += 1
-        tmp_error = error_num
-        print("Client " + str(client) + " requires extra transactions! Count = " + str(rerun_count))
-        extra_path = './client/' + str(client) + '/extra/'
-        mkdir(extra_path) 
-        uniform_generator(extra_path, client, error_num, operation_num, key_num, rerun_count)
-        extra_file_path = extra_path+"hist_"+str(client)+"_"+str(rerun_count)+".txt"
-        extra_hist_list = generate_opt(extra_file_path, error_num)
-        extra_result_list, error_num = run_ops(extra_hist_list,client,start_pos)
-        start_pos += tmp_error
-        total_error += error_num
-        result_list.extend(extra_result_list)
-    summary_line = "total = " + str(start_pos) + ", succeeded = " + str(start_pos-total_error) + ", failed = " + str(total_error)
+    # while(error_num > e_threshold):
+    #     rerun_count += 1
+    #     tmp_error = error_num
+    #     print("Client " + str(client) + " requires extra transactions! Count = " + str(rerun_count))
+    #     extra_path = './client/' + str(client) + '/extra/'
+    #     mkdir(extra_path) 
+    #     uniform_generator(extra_path, client, error_num, operation_num, key_num, rerun_count)
+    #     extra_file_path = extra_path+"hist_"+str(client)+"_"+str(rerun_count)+".txt"
+    #     extra_hist_list = generate_opt(extra_file_path, error_num)
+    #     extra_result_list, error_num = run_ops(extra_hist_list,client,start_pos)
+    #     start_pos += tmp_error
+    #     total_error += error_num
+    #     result_list.extend(extra_result_list)
+    # summary_line = "total = " + str(start_pos) + ", succeeded = " + str(start_pos-total_error) + ", failed = " + str(total_error)
     # result_list.append(summary_line)
     result_path = folder_name + "result_" + str(client) + ".txt"
-    write_result(result_list, result_path)
+    write_result(result_list, result_path, error_num)
 
 
 if __name__ == '__main__':
