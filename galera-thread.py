@@ -338,7 +338,6 @@ def write_result(result,file_path, error_num, server_num):
     for n_trans in range(len(result)-1):
         for n_ops in range(len(result[0])):
             f.write(result[n_trans][n_ops]+'\n')
-    f.write('server_no = ' + str(server_num) + '\n')
     f.close()
     print(file_path + ' is completed, contain error: ', error_num)
 
@@ -364,7 +363,7 @@ def run_thread(id):
     #     result_list.extend(extra_result_list)
     # summary_line = "total = " + str(start_pos) + ", succeeded = " + str(start_pos-total_error) + ", failed = " + str(total_error)
     # result_list.append(summary_line)
-    result_path = folder_name + "result_" + str(client) + ".txt"
+    result_path = folder_name + "result_" + str(client) + "server_" + str(server_num) + ".txt"
     write_result(result_list, result_path, error_num, server_num)
 
 
