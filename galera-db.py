@@ -1,6 +1,6 @@
 '''
 scp -P 22 /Users/zoooesong/Workspaces/galera-db.py nobi@pc479.emulab.net:/users/nobi/galera-data/galera-db.py
-python3 galera/galera-db.py 155.98.39.154
+python3 galera/galera-db.py 155.98.39.143
 '''
 
 import os,sys

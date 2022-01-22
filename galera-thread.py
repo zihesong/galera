@@ -26,7 +26,7 @@ operation_num = 25
 threads_num = 2
 node_no=1
 folder_num = 11
-server_id = ['155.98.39.139','155.98.39.140','155.98.39.142']
+server_id = ['155.98.39.143','155.98.39.151','155.98.39.130']
 
 try:
     opts, args = getopt.getopt(sys.argv[1:],"hw:r:p:t:o:c:n:f:",["help","wo_rate=","ro_rate=","w_percent=","trans_num=","op_num=","client_num=","node_no=","folder_num="])
