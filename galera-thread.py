@@ -335,10 +335,10 @@ def write_result(result,file_path, error_num, server_num):
         file is the output path
     '''
     f=open(file_path,"w")
-    f.write('server_no = ' + str(server_num) + '\n')
     for n_trans in range(len(result)-1):
         for n_ops in range(len(result[0])):
             f.write(result[n_trans][n_ops]+'\n')
+    f.write('server_no = ' + str(server_num) + '\n')
     f.close()
     print(file_path + ' is completed, contain error: ', error_num)
 
