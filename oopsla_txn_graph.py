@@ -1,6 +1,5 @@
 import copy
 
-
 class DiGraph:
     def __init__(self):
         self.adj_map = {}
@@ -210,7 +209,7 @@ class OopslaAtomicHistoryPO:
 
 
 if __name__ == '__main__':
-    for i in range(1):
+    for i in range(10):
         folder_name = "output/"+str(i)+"/result.txt"
         with open(folder_name) as in_file:
             raw_ops = in_file.readlines()

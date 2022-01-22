@@ -3,7 +3,7 @@
 #     raw_ops = in_file.readlines()
 
 # print(raw_ops)
-for i in range(30):
+for i in range(10):
     folder_name = "output/"+str(i)+"/result.txt"
     # print(folder_name)
     with open(folder_name) as in_file:
