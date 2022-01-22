@@ -14,13 +14,13 @@ name2="node-2"
 name3="node-3"
 node=$1
 
-if [ $node = 1 ];then 
+if [ $node -eq 1 ];then 
     server="$server1"
     name="$name1"
-elif [ $node = 2 ];then 
+elif [ $node -eq 2 ];then 
     server="$server2"
     name="$name2"
-elif [ $node = 3 ];then 
+elif [ $node -eq 3 ];then 
     server="$server3"
     name="$name3"
 fi
@@ -60,7 +60,7 @@ EOF
 
 sudo systemctl stop mysql
 sudo systemctl status mysql
-if [ $node = 1 ];then 
+if [ $node -eq 1 ];then 
     sudo galera_new_cluster
     sudo mysql -u root -p123456 -e "SHOW STATUS LIKE 'wsrep_cluster_size'"
     sudo mysql -u root -p123456 -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%.emulab.net' IDENTIFIED BY '123456' WITH GRANT OPTION;"
