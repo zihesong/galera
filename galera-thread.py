@@ -268,7 +268,7 @@ def run_ops(list_of_ops, client_no):
     server = server_id[server_num]
     print("client_no: "+ str(client_no) + ", server_no: " + str(server))
     server_info = 'server_no = ' + str(server)
-    result_ops.append(server_info)
+    # result_ops.append(server_info)
     connect = mariadb.connect(host=server, user="root",password="123456")
     # Disable Auto-Commit
     connect.autocommit = False
@@ -327,6 +327,7 @@ def run_ops(list_of_ops, client_no):
         # result_ops.append(temp_tx_op)
     cursor.close()
     connect.close()
+    result_ops.append(server_info)
     if t_count < transaction_num:
         print("################################################################################################################UNFINISH################################################################################################################")
     return result_ops, e_count
