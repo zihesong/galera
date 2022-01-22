@@ -267,7 +267,6 @@ def run_ops(list_of_ops, client_no):
     server_num = random_pick([0,1,2],[0.34,0.33,0.33])
     server = server_id[server_num]
     print("client_no: "+ str(client_no) + ", server_no: " + str(server))
-    result_ops.append(server_num)
     connect = mariadb.connect(host=server, user="root",password="123456")
     # Disable Auto-Commit
     connect.autocommit = False
@@ -328,18 +327,18 @@ def run_ops(list_of_ops, client_no):
     connect.close()
     if t_count < transaction_num:
         print("################################################################################################################UNFINISH################################################################################################################")
-    return result_ops, e_count
+    return result_ops, e_count, server_num
 
-def write_result(result,file_path, error_num):
+def write_result(result,file_path, error_num, server_num):
     '''
         result_single_history is a three dimensional list
         file is the output path
     '''
     f=open(file_path,"w")
+    f.write('server_no = ' + server_num + '\n')
     for n_trans in range(len(result)-1):
         for n_ops in range(len(result[0])):
             f.write(result[n_trans][n_ops]+'\n')
-    # f.write(str(result[len(result)-1]))
     f.close()
     print(file_path + ' is completed, contain error: ', error_num)
 
@@ -349,7 +348,7 @@ def run_thread(id):
     zipf_generator(hist_folder, client, 3*transaction_num, operation_num, key_num)
     file_path = hist_folder + "hist_" + str(client) + ".txt"
     hist_list = generate_opt(file_path, 3*transaction_num)
-    result_list, error_num = run_ops(hist_list,client)
+    result_list, error_num, server_num = run_ops(hist_list,client)
     # while(error_num > e_threshold):
     #     rerun_count += 1
     #     tmp_error = error_num
@@ -366,7 +365,7 @@ def run_thread(id):
     # summary_line = "total = " + str(start_pos) + ", succeeded = " + str(start_pos-total_error) + ", failed = " + str(total_error)
     # result_list.append(summary_line)
     result_path = folder_name + "result_" + str(client) + ".txt"
-    write_result(result_list, result_path, error_num)
+    write_result(result_list, result_path, error_num, server_num)
 
 
 if __name__ == '__main__':
