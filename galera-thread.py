@@ -7,6 +7,7 @@ import linecache
 import os
 import time
 import random
+from unittest import result
 import pandas as pd
 import sys
 import getopt
@@ -25,7 +26,7 @@ operation_num = 25
 threads_num = 2
 node_no=1
 folder_num = 11
-server_id = ['155.98.39.154','155.98.39.144','155.98.39.68']
+server_id = ['155.98.39.139','155.98.39.140','155.98.39.142']
 
 try:
     opts, args = getopt.getopt(sys.argv[1:],"hw:r:p:t:o:c:n:f:",["help","wo_rate=","ro_rate=","w_percent=","trans_num=","op_num=","client_num=","node_no=","folder_num="])
@@ -266,6 +267,8 @@ def run_ops(list_of_ops, client_no):
     server_num = random_pick([0,1,2],[0.34,0.33,0.33])
     server = server_id[server_num]
     print("client_no: "+ str(client_no) + ", server_no: " + str(server))
+    server_info = 'server_no = ' + str(server)
+    result_ops.append(server_info)
     connect = mariadb.connect(host=server, user="root",password="123456")
     # Disable Auto-Commit
     connect.autocommit = False
@@ -287,8 +290,6 @@ def run_ops(list_of_ops, client_no):
                     cursor.execute("UPDATE galera.variables SET val=%d WHERE var=%d;" % (val,key))
                     single_op = 'w(' + str(key) + ',' + str(val) + ',' + str(client_no) + ',' + str(i) + ',' + str(op_num) + ')'
                 except Exception as e:
-                    # print('Error in write: {}'.format(e)) 
-                    # print(temp_tx_op)
                     single_op = 'w(' + str(key) + ',' + str(val) + ',' + str(client_no) + ',' + str(i) + ',' + str(op_num) + ')'
                     e_flag = True
             elif(op[0] == 'read'):
