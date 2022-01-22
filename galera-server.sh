@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 # sh galera-server.sh 1
 # scp -P 22 /Users/zoooesong/Workspaces/galera-server.sh nobi@pc479.emulab.net:/users/nobi/galera-data/galera-server.sh   
@@ -13,19 +13,14 @@ name1="node-1"
 name2="node-2"
 name3="node-3"
 node=$1
-# cluster_name=$2
-# server1=$3
-# server2=$4
-# server3=$5
 
-
-if [ $node -eq 1 ];then 
+if [[ $node == 1 ]];then 
     server="$server1"
     name="$name1"
-elif [ $node -eq 2 ];then 
+elif [[ $node == 2 ]];then 
     server="$server2"
     name="$name2"
-elif [ $node -eq 3 ];then 
+elif [[ $node == 3 ]];then 
     server="$server3"
     name="$name3"
 fi
@@ -65,7 +60,7 @@ EOF
 
 sudo systemctl stop mysql
 sudo systemctl status mysql
-if [ $node -eq 1 ];then 
+if [[ $node == 1 ]];then 
     sudo galera_new_cluster
     sudo mysql -u root -p123456 -e "SHOW STATUS LIKE 'wsrep_cluster_size'"
     sudo mysql -u root -p123456 -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%.emulab.net' IDENTIFIED BY '123456' WITH GRANT OPTION;"
