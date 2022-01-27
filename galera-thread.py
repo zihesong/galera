@@ -23,7 +23,7 @@ ro_rate=0.2
 wr_rate = 0.5 # write
 transaction_num = 20
 operation_num = 25
-threads_num = 2
+threads_num = 10
 node_no=1
 folder_num = 11
 server_id = ['155.98.39.143','155.98.39.151','155.98.39.130']
@@ -36,6 +36,8 @@ try:
         elif opt in ('-r','--ro_rate'):
             ro_rate = float(arg)
         elif opt in ('-p','--w_percent'):
+
+            
             wr_rate = float(arg)
         elif opt in ('-t','--trans_num'):
             transaction_num = int(arg)

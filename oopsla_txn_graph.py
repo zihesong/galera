@@ -209,7 +209,7 @@ class OopslaAtomicHistoryPO:
 
 
 if __name__ == '__main__':
-    for i in range(10):
+    for i in range(1):
         folder_name = "output/"+str(i)+"/result.txt"
         with open(folder_name) as in_file:
             raw_ops = in_file.readlines()
@@ -227,4 +227,4 @@ if __name__ == '__main__':
         causal_hist.vis_is_trans()
         if causal_hist.vis.has_cycle():
             print('BP222222 found in: ' + str(i))
-            print(causal_hist.vis.find_cycle(65))
+            print(causal_hist.vis.find_cycle(6))
