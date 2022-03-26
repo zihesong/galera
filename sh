@@ -1,3 +1,8 @@
+export ANDROID_SDK_ROOT=/home/zoooe/Android/Sdk
+export PATH=$PATH:$ANDROID_SDK_ROOT/build-tools/33.0.0-rc2:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/emulator
+
+
+
 cd workspaces/github/themis/scripts
 python3 themis.py --avd themis1 --apk ../APhotoManager/APhotoManager-0.6.4.180314-debug-#116.apk -n 1 --repeat 3 --time 1h -o ../monkey-results/ --monkey 
 
